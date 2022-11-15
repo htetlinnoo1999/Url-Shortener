@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    private readonly usersRepository: Repository<User>,
   ) {}
 
   async findOne(email: string): Promise<User> {
