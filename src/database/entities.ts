@@ -1,3 +1,4 @@
+import { Url } from '@entities/url.entity';
 import { User } from '@entities/user.entity';
 
-export default [User];
+export default [User, Url];
