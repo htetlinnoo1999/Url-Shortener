@@ -20,6 +20,12 @@ export class Url {
   @Column({ type: 'timestamp', nullable: true })
   public expired_at?: Date;
 
+  @Column({ default: 0 })
+  public count?: number;
+
+  @Column({ type: 'timestamp', nullable: true })
+  public deleted_at: Date;
+
   @CreateDateColumn({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',

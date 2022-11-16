@@ -8,7 +8,12 @@ import { UrlModule } from './url/url.module';
 import dbConfig from './database/database.service';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dbConfig), UsersModule, AuthModule, UrlModule],
+  imports: [
+    TypeOrmModule.forRoot(dbConfig),
+    UsersModule,
+    AuthModule,
+    UrlModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
