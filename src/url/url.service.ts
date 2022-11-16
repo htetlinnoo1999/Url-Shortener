@@ -1,8 +1,9 @@
 import { Url } from '@entities/url.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { CreateUrlDto, UpdateUrlDto } from './dto/url.dto';
+import { DateTime } from 'luxon';
 
 @Injectable()
 export class UrlService {
@@ -11,11 +12,17 @@ export class UrlService {
   ) {}
 
   async getAll(): Promise<Url[]> {
-    return await this.urlsRepository.find();
+    return await this.urlsRepository.findBy({
+      deleted_at: IsNull(),
+    });
   }
 
-  async findOne(id: number): Promise<Url> {
+  async findById(id: number): Promise<Url> {
     return await this.urlsRepository.findOneBy({ id });
+  }
+
+  async findByColumn(payload: TUrlSearch): Promise<Url> {
+    return await this.urlsRepository.findOneBy(payload);
   }
 
   async createOne(payload: CreateUrlDto): Promise<Url> {
@@ -24,9 +31,6 @@ export class UrlService {
   }
 
   async updateOne(id: number, payload: UpdateUrlDto): Promise<Url> {
-    const url = await this.urlsRepository.findOneBy({ id });
-    if (!url) throw new NotFoundException();
-
     return this.urlsRepository.save({
       id,
       ...payload,
@@ -34,8 +38,9 @@ export class UrlService {
   }
 
   async deleteOne(id: number): Promise<void> {
-    const url = await this.urlsRepository.findOneBy({ id });
-    if (!url) throw new NotFoundException();
-    await this.urlsRepository.delete(id);
+    await this.urlsRepository.save({
+      id,
+      deleted_at: DateTime.now().toISO(),
+    });
   }
 }
