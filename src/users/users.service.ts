@@ -17,6 +17,9 @@ export class UsersService {
       email,
     });
   }
+  async findByColumn(payload: TUserSearch): Promise<User> {
+    return await this.usersRepository.findOneBy(payload);
+  }
 
   async create(payload: CreateUserDto): Promise<User> {
     const newUser = this.usersRepository.create(payload);

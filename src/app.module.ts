@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { UrlModule } from './url/url.module';
 import dbConfig from './database/database.service';
+import { JwtStrategy } from '@strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -15,6 +16,6 @@ import dbConfig from './database/database.service';
     UrlModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtStrategy],
 })
 export class AppModule {}
