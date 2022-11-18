@@ -21,6 +21,9 @@
     "paths": {
       "@entities/*": ["database/entities/*"],
       "@decorators/*": ["decorator/*"],
+      "@strategies/*": ["strategy/*"],
+      "@guards/*": ["guard/*"],
+      "@interceptors/*": ["interceptors/*"]
     },
   },
   "exclude": ["node_modules", "dist"],

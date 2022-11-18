@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { User as UserDecorator } from '@decorators/user.decorator';
-import { AuthGuard } from '@nestjs/passport';
+import { LocalAuthGuard } from '@guards/local.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -18,7 +18,7 @@ export class AuthController {
     return await this.authService.signUp({ ...body, password: hashedPassword });
   }
 
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@UserDecorator() user: User) {
     const token = await this.authService.login(user);
